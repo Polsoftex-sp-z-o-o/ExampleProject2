@@ -1,0 +1,17 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    username: service
+    password: Haslo123
+    url: jdbc:sqlserver://zdrowejedzenie.database.windows.net:1433;databaseName=zdrowejedzenie
+    maxActive: 1
+  jpa:
+    database-platform: org.hibernate.dialect.SQLServerDialect
+
+
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
