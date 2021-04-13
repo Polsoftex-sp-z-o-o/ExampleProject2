@@ -6,6 +6,7 @@ env:
   CLUSTER_RESOURCE_GROUP: "polsoftex"
   CLUSTER_NAME: "polCluster"
   IMAGE_PULL_SECRET: "zdrowejedzenie-secret"
+  MANIFEST: 'manifests/deployment.yml'
 
 on:
   push:
@@ -64,10 +65,13 @@ jobs:
           uses: azure/k8s-deploy@v1
           with:
             manifests: |
-              manifests/deployment.yml
+              ${{ env.MANIFEST }}
             images: |
               ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.APP_NAME }}:latest
             imagepullsecrets: |
               ${{ env.IMAGE_PULL_SECRET }}
 #             namespace: ${{ env.NAMESPACE }}
+
+        - name: 'Restart pods'
+          run: kubectl rollout restart deployment ${{ env.APP_NAME }}
 
